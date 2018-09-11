@@ -3,7 +3,6 @@ set -e
 
 PG_LOG=/var/log/postgresql/
 PG_CONFIG_DIR=/etc/pgbouncer
-PG_USER=postgres
 
 if [ ! -f ${PG_CONFIG_DIR}/pgbouncer.ini ]; then
   echo "create pgbouncer config in ${PG_CONFIG_DIR}"
@@ -49,7 +48,6 @@ ignore_startup_parameters = extra_float_digits
 " > ${PG_CONFIG_DIR}/pgbouncer.ini
 fi
 
-adduser ${PG_USER}
 mkdir -p ${PG_LOG}
 chmod -R 755 ${PG_LOG}
 chown -R ${PG_USER}:${PG_USER} ${PG_LOG}
