@@ -3,6 +3,7 @@ set -e
 
 PG_LOG=/var/log/postgresql/
 PG_CONFIG_DIR=/etc/pgbouncer
+PG_USER=postgres
 
 if [ -f ${PG_CONFIG_DIR}/pgbouncer.ini ]; then
     rm ${PG_CONFIG_DIR}/pgbouncer.ini
