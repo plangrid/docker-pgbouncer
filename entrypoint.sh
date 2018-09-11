@@ -4,9 +4,13 @@ set -e
 PG_LOG=/var/log/postgresql/
 PG_CONFIG_DIR=/etc/pgbouncer
 
-if [ ! -f ${PG_CONFIG_DIR}/pgbouncer.ini ]; then
-  echo "create pgbouncer config in ${PG_CONFIG_DIR}"
-  mkdir -p ${PG_CONFIG_DIR}
+if [ -f ${PG_CONFIG_DIR}/pgbouncer.ini ]; then
+    rm ${PG_CONFIG_DIR}/pgbouncer.ini
+else
+    mkdir -p ${PG_CONFIG_DIR}
+fi
+
+echo "create pgbouncer config in ${PG_CONFIG_DIR}"
 
   printf "\
 [databases]
@@ -46,11 +50,13 @@ client_tls_protocols = secure
 # DEVOPS-1640
 ignore_startup_parameters = extra_float_digits
 " > ${PG_CONFIG_DIR}/pgbouncer.ini
-fi
 
 mkdir -p ${PG_LOG}
 chmod -R 755 ${PG_LOG}
 chown -R ${PG_USER}:${PG_USER} ${PG_LOG}
 
 echo "Starting pgbouncer..."
-exec pgbouncer -q -u ${PG_USER} $PG_CONFIG
+#exec pgbouncer -q -u ${PG_USER} $PG_CONFIG
+ls -al /etc/pgbouncer
+cat /etc/pgbouncer/pgbouncer.ini
+systemctl start pgbouncer
