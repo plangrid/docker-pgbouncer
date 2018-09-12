@@ -37,6 +37,10 @@ RUN         set -x \
             && apt-get purge -y --auto-remove \
             && rm -rf /var/lib/apt/lists/*
 
+RUN         useradd postgres
+
+USER        postgres
+
 ADD         entrypoint.sh ./
 
 EXPOSE      5432
