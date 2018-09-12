@@ -59,4 +59,4 @@ chown -R ${PG_USER}:${PG_USER} ${PG_LOG}
 echo "Starting pgbouncer..."
 ls -al /etc/pgbouncer
 cat /etc/pgbouncer/pgbouncer.ini
-exec pgbouncer -q -u ${PG_USER} ${PG_CONFIG}/pgbouncer.ini
+pgbouncer -q -u ${PG_USER} ${PG_CONFIG}/pgbouncer.ini
