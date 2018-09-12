@@ -38,11 +38,12 @@ default_pool_size = 180
 
 admin_users = ${PGBOUNCER_ADMIN_USERS}
 
-client_tls_sslmode = require
-client_tls_key_file = /etc/pgbouncer/private.pem
-client_tls_cert_file = /etc/pgbouncer/public.pem
-client_tls_ca_file = /etc/pgbouncer/public.pem
-client_tls_protocols = secure
+#uncomment these later when in actual use
+#client_tls_sslmode = require
+#client_tls_key_file = /etc/pgbouncer/private.pem
+#client_tls_cert_file = /etc/pgbouncer/public.pem
+#client_tls_ca_file = /etc/pgbouncer/public.pem
+#client_tls_protocols = secure
 
 # fivetran connects with extra_float_digits.
 # See ref for extra_float_digits:
@@ -59,4 +60,4 @@ chown -R ${PG_USER}:${PG_USER} ${PG_LOG}
 echo "Starting pgbouncer..."
 ls -al /etc/pgbouncer
 cat /etc/pgbouncer/pgbouncer.ini
-pgbouncer ${PG_CONFIG}/pgbouncer.ini
+pgbouncer ${PG_CONFIG_DIR}/pgbouncer.ini
