@@ -3,7 +3,7 @@ set -e
 
 PG_LOG=/var/log/postgresql/
 PG_CONFIG_DIR=/etc/pgbouncer
-PG_USER=postgres
+PG_USER=varjittadmin
 
 if [ -f ${PG_CONFIG_DIR}/pgbouncer.ini ]; then
     rm ${PG_CONFIG_DIR}/pgbouncer.ini
@@ -57,7 +57,6 @@ chmod -R 755 ${PG_LOG}
 chown -R ${PG_USER}:${PG_USER} ${PG_LOG}
 
 echo "Starting pgbouncer..."
-#exec pgbouncer -q -u ${PG_USER} $PG_CONFIG
 ls -al /etc/pgbouncer
 cat /etc/pgbouncer/pgbouncer.ini
-systemctl start pgbouncer
+exec pgbouncer -q -u ${PG_USER} $PG_CONFIG
