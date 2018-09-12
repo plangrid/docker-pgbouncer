@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -xe
 
 PG_LOG=/var/log/postgresql/
 PG_CONFIG_DIR=/etc/pgbouncer
