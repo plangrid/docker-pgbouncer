@@ -13,10 +13,11 @@ fi
 
 echo "create pgbouncer config in ${PG_CONFIG_DIR}"
 
-  printf "\
+printf "\
 [databases]
 ${DB_NAME} = host=${DB_HOST:?"Setup pgbouncer config error! You must set DB_HOST env"} port=${DB_PORT:-5432} \
 ${DB_PASSWORD:+password=${DB_PASSWORD}}
+
 [pgbouncer]
 logfile = /var/log/postgresql/pgbouncer.log
 pidfile = /var/run/postgresql/pgbouncer.pid
@@ -52,6 +53,10 @@ admin_users = ${PGBOUNCER_ADMIN_USERS}
 # DEVOPS-1640
 ignore_startup_parameters = extra_float_digits
 " > ${PG_CONFIG_DIR}/pgbouncer.ini
+
+printf "\
+\"${PG_USER}\" \"password\"
+" > ${PG_CONFIG_DIR}/userlist.txt
 
 mkdir -p ${PG_LOG}
 chmod -R 755 ${PG_LOG}
