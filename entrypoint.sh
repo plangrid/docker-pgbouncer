@@ -64,5 +64,6 @@ chown -R ${PG_USER}:${PG_USER} ${PG_LOG}
 
 echo "Starting pgbouncer..."
 ls -al /etc/pgbouncer
-cat /etc/pgbouncer/pgbouncer.ini
+cat ${PG_CONFIG_DIR}/pgbouncer.ini
+cat ${PG_CONFIG_DIR}/userlist.txt
 pgbouncer -u $PG_USER ${PG_CONFIG_DIR}/pgbouncer.ini
