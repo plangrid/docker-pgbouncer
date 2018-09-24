@@ -12,9 +12,9 @@ else
 fi
 
 cp /mnt/private.pem ${PG_CONFIG_DIR}/private.pem
-chmod 400 /private.pem ${PG_CONFIG_DIR}/private.pem
+chmod 400 ${PG_CONFIG_DIR}/private.pem
 cp /mnt/public.pem ${PG_CONFIG_DIR}/public.pem
-chmod 400 /public.pem ${PG_CONFIG_DIR}/public.pem
+chmod 400 ${PG_CONFIG_DIR}/public.pem
 
 echo "create pgbouncer config in ${PG_CONFIG_DIR}"
 
