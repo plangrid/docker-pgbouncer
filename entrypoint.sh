@@ -63,7 +63,7 @@ IFS=',' read -r -a pg_passwords <<< "$PG_PASSWORDS"
 
 for index in "${!pg_usernames[@]}"
 do
-    printf "\"${pg_usernames[index]}\" \"${pg_passwords[index]}\"" >> ${PG_CONFIG_DIR}/userlist.txt
+    printf "\"${pg_usernames[index]}\" \"${pg_passwords[index]}\"\n" >> ${PG_CONFIG_DIR}/userlist.txt
 done
 
 mkdir -p ${PG_LOG}
