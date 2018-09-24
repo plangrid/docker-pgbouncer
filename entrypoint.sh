@@ -11,6 +11,11 @@ else
     mkdir -p ${PG_CONFIG_DIR}
 fi
 
+cp /private.pem ${PG_CONFIG_DIR}/private.pem
+chmod 400 /private.pem ${PG_CONFIG_DIR}/private.pem
+cp /public.pem ${PG_CONFIG_DIR}/public.pem
+chmod 400 /public.pem ${PG_CONFIG_DIR}/public.pem
+
 echo "create pgbouncer config in ${PG_CONFIG_DIR}"
 
 printf "\
@@ -39,12 +44,11 @@ default_pool_size = 180
 
 admin_users = ${PGBOUNCER_ADMIN_USERS}
 
-#uncomment these later when in actual use
-#client_tls_sslmode = require
-#client_tls_key_file = /etc/pgbouncer/private.pem
-#client_tls_cert_file = /etc/pgbouncer/public.pem
-#client_tls_ca_file = /etc/pgbouncer/public.pem
-#client_tls_protocols = secure
+client_tls_sslmode = require
+client_tls_key_file = /etc/pgbouncer/private.pem
+client_tls_cert_file = /etc/pgbouncer/public.pem
+client_tls_ca_file = /etc/pgbouncer/public.pem
+client_tls_protocols = secure
 
 # fivetran connects with extra_float_digits.
 # See ref for extra_float_digits:
@@ -54,9 +58,13 @@ admin_users = ${PGBOUNCER_ADMIN_USERS}
 ignore_startup_parameters = extra_float_digits
 " > ${PG_CONFIG_DIR}/pgbouncer.ini
 
-printf "\
-\"${PG_USER}\" \"password\"
-" > ${PG_CONFIG_DIR}/userlist.txt
+IFS=',' read -r -a pg_usernames <<< "$PG_USERS"
+IFS=',' read -r -a pg_passwords <<< "$PG_PASSWORDS"
+
+for index in "${!pg_usernames[@]}"
+do
+    printf "\"${pg_usernames[index]}\" \"${pg_passwords[index]}\"" >> ${PG_CONFIG_DIR}/userlist.txt
+done
 
 mkdir -p ${PG_LOG}
 chmod -R 755 ${PG_LOG}
